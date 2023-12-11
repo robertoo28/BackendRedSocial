@@ -7,7 +7,7 @@ const secret ="CLAVE_SECRETA";
 
 
 //Funcion generar tokens
- exports.createToken = (user) =>{
+ const createToken = (user) =>{
     const payload= {
         id: user.__id,
         name:user.name,
@@ -26,4 +26,8 @@ const secret ="CLAVE_SECRETA";
 
 
 
+module.exports = {
+    secret,
+    createToken
 
+}
