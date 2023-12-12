@@ -15,8 +15,26 @@ exports.auth = (req, res, next) => {
       message: "No se ha enviado la cabecera correctamente",
     });
   }
+  //Decodificar token
+  let token = req.headers.authorization.replace(/['"]+/g, "");
+  try {
+    let payload = jwt.decode(token, secret);
+    //Comprobar expiración del toke
+    if (payload.exp <= moment().unix()) {
+      return res.status(401).send({
+        status: "Error",
+        message: "Token expirado",
+      });
+    }
+    //Agrega datos del usuario
+    req.user = payload;
+  } catch (error) {
+    return res.status(404).send({
+      status: "Error",
+      message: "Token invalido",
+      error,
+    });
+  }
+
+  next();
 };
-
-//Decodificar token
-
-//Agrega datos del usuario

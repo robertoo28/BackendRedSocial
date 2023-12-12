@@ -8,6 +8,7 @@ const jwt = require("../services/jwt");
 const prueba = (req, res) => {
   return res.status(200).send({
     messagge: "Mensaje enviado desde usuario",
+    usuario:req.user
   });
 };
 
